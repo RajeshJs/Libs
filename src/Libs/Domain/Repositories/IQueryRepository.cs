@@ -1,4 +1,5 @@
 ﻿using System;
+using Libs.Domain.Entities;
 using Libs.Domain.Repositories.Operations;
 
 namespace Libs.Domain.Repositories
@@ -16,7 +17,7 @@ namespace Libs.Domain.Repositories
         IPaging<TEntity, TKey>,
         IFind<TEntity, TKey>
 
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
 
@@ -35,7 +36,7 @@ namespace Libs.Domain.Repositories
         IPagingAsync<TEntity, TKey>,
         IFindAsync<TEntity, TKey>
 
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
 

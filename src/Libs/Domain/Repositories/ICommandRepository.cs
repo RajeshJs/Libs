@@ -1,4 +1,5 @@
 ﻿using System;
+using Libs.Domain.Entities;
 using Libs.Domain.Repositories.Operations;
 
 namespace Libs.Domain.Repositories
@@ -8,7 +9,7 @@ namespace Libs.Domain.Repositories
         IUpdate<TEntity, TKey>,
         IDelete<TEntity, TKey>
 
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
 
@@ -19,7 +20,7 @@ namespace Libs.Domain.Repositories
         IUpdateAsync<TEntity, TKey>,
         IDeleteAsync<TEntity, TKey>
 
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
 

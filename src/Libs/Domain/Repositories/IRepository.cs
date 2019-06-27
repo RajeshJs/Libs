@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Libs.Domain.Entities;
+using System;
 
 namespace Libs.Domain.Repositories
 {
@@ -8,7 +9,7 @@ namespace Libs.Domain.Repositories
         ICommandRepository<TEntity, TKey>,
         ICommandAsyncRepository<TEntity, TKey>
 
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
 

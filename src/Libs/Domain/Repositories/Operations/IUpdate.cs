@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Libs.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 namespace Libs.Domain.Repositories.Operations
 {
     public interface IUpdate<in TEntity, in TKey>
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         void Update(params TEntity[] entities);
@@ -15,7 +16,7 @@ namespace Libs.Domain.Repositories.Operations
     }
 
     public interface IUpdateAsync<in TEntity, in TKey>
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);

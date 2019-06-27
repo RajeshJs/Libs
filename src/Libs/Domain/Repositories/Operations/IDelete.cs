@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Libs.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 namespace Libs.Domain.Repositories.Operations
 {
     public interface IDelete<in TEntity, in TKey>
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         void Delete(params TKey[] ids);
@@ -19,7 +20,7 @@ namespace Libs.Domain.Repositories.Operations
     }
 
     public interface IDeleteAsync<in TEntity, in TKey>
-        where TEntity : class
+        where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         Task Delete(TKey id, CancellationToken cancellationToken = default);
