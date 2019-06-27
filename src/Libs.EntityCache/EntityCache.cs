@@ -1,23 +1,23 @@
-﻿using Libs.Domain.Entities;
+﻿using Libs.Caching;
+using Libs.Domain.Entities;
 using Libs.Domain.Entities.Caching;
 using Libs.Domain.Repositories;
-using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 
 namespace Libs.EntityCache
 {
-    public class MemoryEntityCache<TEntity, TKey> :
+    public class EntityCache<TEntity, TKey> :
         IEntityCache<TEntity, TKey>
 
         where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        private readonly IMemoryCache _cache;
+        private readonly ICache _cache;
         private readonly IRepository<TEntity, TKey> _repository;
 
-        public MemoryEntityCache(
-            IMemoryCache cache,
+        public EntityCache(
+            ICache cache,
             IRepository<TEntity, TKey> repository
             )
         {
@@ -31,14 +31,18 @@ namespace Libs.EntityCache
 
         public TEntity Get(TKey id)
         {
-            return _cache.GetOrCreate(id,
-                entry => _repository.Find(id));
+            //return _cache.GetOrCreate(id,
+            //    entry => _repository.Find(id));
+
+            return null;
         }
 
         public Task<TEntity> GetAsync(TKey id)
         {
-            return _cache.GetOrCreateAsync(id,
-                entry => _repository.FindAsync(id));
+            //return _cache.GetOrCreateAsync(id,
+            //    entry => _repository.FindAsync(id));
+
+            return null;
         }
     }
 }
