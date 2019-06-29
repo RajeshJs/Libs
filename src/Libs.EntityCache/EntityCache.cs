@@ -10,39 +10,40 @@ namespace Libs.EntityCache
     public class EntityCache<TEntity, TKey> :
         IEntityCache<TEntity, TKey>
 
-        where TEntity : IEntity<TKey>
+        where TEntity : class, IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        private readonly ICache _cache;
+        public string CacheName { get; }
+        public ICache Cache => _cacheManager.GetCache(CacheName);
+
+        private readonly ICacheManager _cacheManager;
         private readonly IRepository<TEntity, TKey> _repository;
 
         public EntityCache(
-            ICache cache,
-            IRepository<TEntity, TKey> repository
+            ICacheManager cacheManager,
+            IRepository<TEntity, TKey> repository,
+            string cacheName = null
             )
         {
-            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
+            _cacheManager = cacheManager ?? throw new ArgumentNullException(nameof(cacheManager));
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+
+            CacheName = cacheName ?? GetType().FullName;
         }
 
         public TEntity this[TKey id] => Get(id);
 
-        public string CacheName { get; }
-
         public TEntity Get(TKey id)
         {
-            //return _cache.GetOrCreate(id,
-            //    entry => _repository.Find(id));
-
-            return null;
+            return (TEntity)Cache.Get(id.ToString(), _id => _repository.Find(id));
         }
 
-        public Task<TEntity> GetAsync(TKey id)
+        public async Task<TEntity> GetAsync(TKey id)
         {
-            //return _cache.GetOrCreateAsync(id,
-            //    entry => _repository.FindAsync(id));
+            var entity = await Cache.GetAsync(id.ToString(),
+                async _id => await _repository.FindAsync(id));
 
-            return null;
+            return (TEntity)entity;
         }
     }
 }
