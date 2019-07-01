@@ -5,9 +5,9 @@ using Libs.Domain.Repositories.Operations;
 namespace Libs.Domain.Repositories
 {
     public interface ICommandRepository<in TEntity, in TKey> :
-        IAdd<TEntity, TKey>,
-        IUpdate<TEntity, TKey>,
-        IDelete<TEntity, TKey>
+        ICreate<TEntity, TKey>,
+        IModify<TEntity, TKey>,
+        IRemove<TEntity, TKey>
 
         where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
@@ -16,9 +16,9 @@ namespace Libs.Domain.Repositories
     }
 
     public interface ICommandAsyncRepository<in TEntity, in TKey> :
-        IAddAsync<TEntity, TKey>,
-        IUpdateAsync<TEntity, TKey>,
-        IDeleteAsync<TEntity, TKey>
+        ICreateAsync<TEntity, TKey>,
+        IModifyAsync<TEntity, TKey>,
+        IRemoveAsync<TEntity, TKey>
 
         where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
