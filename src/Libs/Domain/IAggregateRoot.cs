@@ -1,9 +1,9 @@
-﻿namespace Libs.Domain
+﻿using System;
+
+namespace Libs.Domain
 {
-    /// <summary>
-    /// 聚合根
-    /// </summary>
-    public interface IAggregateRoot
+    public interface IAggregateRoot<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
 
     }
