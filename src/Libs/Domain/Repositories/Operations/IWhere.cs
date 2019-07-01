@@ -1,23 +1,24 @@
 ﻿using Libs.Domain.Entities;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface IWhere<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IWhere<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
     }
 
-    public interface IWhereAsync<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IWhereAsync<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        Task<IEnumerable<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+        Task<IQueryable<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
+            CancellationToken cancellationToken = default);
     }
 }

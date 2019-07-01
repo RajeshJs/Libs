@@ -1,22 +1,25 @@
 ﻿using Libs.Domain.Entities;
 using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface IAll<out TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IAll<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        IEnumerable<TEntity> All();
+        IQueryable<TEntity> All();
+
+        IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors);
     }
 
-    public interface IAllAsync<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IAllAsync<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        Task<IEnumerable<TEntity>> AllAsync(CancellationToken cancellationToken = default);
+        Task<IQueryable<TEntity>> AllAsync(CancellationToken cancellationToken = default);
     }
 }

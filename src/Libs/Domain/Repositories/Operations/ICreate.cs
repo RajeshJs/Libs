@@ -6,21 +6,28 @@ using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface ICreate<in TEntity, in TKey> 
-        where TEntity : IEntity<TKey>
-        where TKey: IEquatable<TKey>
+    public interface ICreate<TEntity, out TPrimaryKey> 
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey: IEquatable<TPrimaryKey>
     {
-        void Create(params TEntity[] entities);
+        TPrimaryKey CreateAndGetId(TEntity entity);
 
-        void Create(IEnumerable<TEntity> entities);
+        TEntity Create(TEntity entity);
+
+        List<TEntity> CreateMany(params TEntity[] entities);
+
+        List<TEntity> CreateMany(IEnumerable<TEntity> entities);
     }
 
-    public interface ICreateAsync<in TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface ICreateAsync<TEntity, TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-        Task CreateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+        Task<TPrimaryKey> CreateAndGetIdAsync(TEntity entity);
+
+        Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
+
+        Task<List<TEntity>> CreateManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     }
 }
