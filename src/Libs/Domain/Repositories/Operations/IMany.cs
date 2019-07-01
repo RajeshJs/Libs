@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface IMultiplue<out TEntity, in TKey>
+    public interface IMany<out TEntity, in TKey>
         where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        IEnumerable<TEntity> Multiple(params TKey[] ids);
+        IEnumerable<TEntity> Many(params TKey[] ids);
 
-        IEnumerable<TEntity> Multiple(IEnumerable<TKey> ids);
+        IEnumerable<TEntity> Many(IEnumerable<TKey> ids);
     }
 
-    public interface IMultiplueAsync<TEntity, in TKey>
+    public interface IManyAsync<TEntity, in TKey>
         where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        Task<IEnumerable<TEntity>> MultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
+        Task<IEnumerable<TEntity>> ManyAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
     }
 }

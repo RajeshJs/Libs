@@ -12,7 +12,7 @@ namespace Libs.Domain.Repositories
         IExistsByExpression<TEntity, TKey>,
         IFirst<TEntity, TKey>,
         ISingle<TEntity, TKey>,
-        IMultiplue<TEntity, TKey>,
+        IMany<TEntity, TKey>,
         IWhere<TEntity, TKey>,
         IPaging<TEntity, TKey>,
         IFind<TEntity, TKey>
@@ -31,7 +31,7 @@ namespace Libs.Domain.Repositories
         IExistsByExpressionAsync<TEntity, TKey>,
         IFirstAsync<TEntity, TKey>,
         ISingleAsync<TEntity, TKey>,
-        IMultiplueAsync<TEntity, TKey>,
+        IManyAsync<TEntity, TKey>,
         IWhereAsync<TEntity, TKey>,
         IPagingAsync<TEntity, TKey>,
         IFindAsync<TEntity, TKey>
