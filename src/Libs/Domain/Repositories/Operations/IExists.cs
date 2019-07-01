@@ -6,31 +6,21 @@ using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface IExists<TEntity, in TKey> 
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IExists<TEntity, in TPrimaryKey> 
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        bool Exists(TKey id);
+        bool Any(TPrimaryKey id);
+
+        bool Any(Expression<Func<TEntity, bool>> predicate);
     }
 
-    public interface IExistsByExpression<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IExistsAsync<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        bool Exists(Expression<Func<TEntity, bool>> predicate);
-    }
+        Task<bool> AnyAsync(TPrimaryKey id, CancellationToken cancellationToken = default);
 
-    public interface IExistsAsync<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
-    {
-        Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken = default);
-    }
-
-    public interface IExistsByExpressionAsync<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
-    {
-        Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
     }
 }

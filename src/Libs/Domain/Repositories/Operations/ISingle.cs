@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface ISingle<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface ISingle<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
         TEntity Single(Expression<Func<TEntity, bool>> predicate);
 
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
     }
 
-    public interface ISingleAsync<TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface ISingleAsync<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
         Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 

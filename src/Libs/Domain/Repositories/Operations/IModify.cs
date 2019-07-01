@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface IModify<in TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IModify<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        void Modify(params TEntity[] entities);
+        TEntity Modify(TEntity entity);
 
-        void Modify(IEnumerable<TEntity> entities);
+        List<TEntity> Modify(params TEntity[] entities);
+
+        List<TEntity> Modify(IEnumerable<TEntity> entities);
     }
 
-    public interface IModifyAsync<in TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey> 
+    public interface IModifyAsync<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey> 
     {
-        Task ModifyAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<TEntity> ModifyAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-        Task ModifyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+        Task<List<TEntity>> ModifyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     }
 }

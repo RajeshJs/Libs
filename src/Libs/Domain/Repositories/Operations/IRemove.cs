@@ -1,34 +1,41 @@
 ﻿using Libs.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
-    public interface IRemove<in TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IRemove<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        void Remove(params TKey[] ids);
+        void Remove(TPrimaryKey id);
 
-        void Remove(IEnumerable<TKey> ids);
+        void Remove(TEntity entity);
+
+        void Remove(params TPrimaryKey[] ids);
+
+        void Remove(IEnumerable<TPrimaryKey> ids);
 
         void Remove(params TEntity[] entities);
 
         void Remove(IEnumerable<TEntity> entities);
+
+        void Remove(Expression<Func<TEntity, bool>> predicate);
     }
 
-    public interface IRemoveAsync<in TEntity, in TKey>
-        where TEntity : IEntity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IRemoveAsync<TEntity, in TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
+        where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-        Task RemoveAsync(TKey id, CancellationToken cancellationToken = default);
-
-        Task RemoveAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
+        Task RemoveAsync(TPrimaryKey id, CancellationToken cancellationToken = default);
 
         Task RemoveAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         Task RemoveAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+
+        Task RemoveAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
     }
 }
