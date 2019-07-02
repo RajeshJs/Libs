@@ -7,8 +7,18 @@
   <ItemGroup>
     <PackageReference Include="AspectCore.Core" Version="1.2.0" />
     <PackageReference Include="AspectCore.Extensions.AspectScope" Version="1.2.0" />
+    <PackageReference Include="AspectCore.Extensions.Autofac" Version="1.2.0" />
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>C:\Users\Rajesh James\.nuget\packages\system.componentmodel.annotations\4.5.0\ref\netstandard2.0\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
