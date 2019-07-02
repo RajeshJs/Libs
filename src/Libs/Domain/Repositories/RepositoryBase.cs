@@ -149,10 +149,7 @@ namespace Libs.Domain.Repositories
 
         public abstract void Remove(TPrimaryKey id);
 
-        public virtual void Remove(TEntity entity)
-        {
-            Remove(entity.Id);
-        }
+        public abstract void Remove(TEntity entity);
 
         public virtual void Remove(params TPrimaryKey[] ids)
         {
