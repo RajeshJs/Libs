@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace Libs.EntityFrameworkCore.Repositories
 {
-    public class EfCoreRepositoryBase<TDbContext, TEntity, TPrimaryKey> : RepositoryBase<TEntity, TPrimaryKey>
+    public class EfCoreRepositoryBase<TDbContext, TEntity, TPrimaryKey> : RepositoryBase<TEntity, TPrimaryKey>, IRepositoryWithDbContext
         where TDbContext : DbContext
         where TEntity : class, IEntity<TPrimaryKey>
         where TPrimaryKey : IEquatable<TPrimaryKey>
@@ -115,13 +115,18 @@ namespace Libs.EntityFrameworkCore.Repositories
 
             return entry?.Entity as TEntity;
         }
+
+        public DbContext GetDbContext()
+        {
+            return Context;
+        }
     }
 
-    public class EfCoreRepositoryBase<TDbContext, TEntity> : EfCoreRepositoryBase<TDbContext, TEntity, int>
+    public class EfCoreRepositoryBase<TDbContext, TEntity> : EfCoreRepositoryBase<TDbContext, TEntity, int>, IRepository<TEntity>
         where TDbContext : DbContext
         where TEntity : class, IEntity<int>
     {
-        public EfCoreRepositoryBase(TDbContext context) : 
+        public EfCoreRepositoryBase(TDbContext context) :
             base(context)
         {
 
