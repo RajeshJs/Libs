@@ -24,12 +24,12 @@ namespace Libs.Domain.Repositories
 
         public virtual int Count(Expression<Func<TEntity, bool>> predicate = null)
         {
-            return Where(predicate).Count();
+            return predicate == null ? All().Count() : Where(predicate).Count();
         }
 
         public virtual long LongCount(Expression<Func<TEntity, bool>> predicate = null)
         {
-            return Where(predicate).LongCount();
+            return predicate == null ? All().LongCount() : Where(predicate).LongCount();
         }
 
         public virtual bool Any(TPrimaryKey id)

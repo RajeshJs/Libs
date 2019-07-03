@@ -41,5 +41,16 @@ namespace Libs.EntityFrameworkCore.Tests.Tests
                 }
             });
         }
+
+        [Fact]
+        public void Should_Count_Blogs()
+        {
+            UseInMemoryDbContext(options =>
+            {
+                var repository = new EfCoreRepositoryBase<BloggingDbContext, Blog>(new BloggingDbContext(options));
+
+                repository.Count().ShouldBe(0);
+            });
+        }
     }
 }
