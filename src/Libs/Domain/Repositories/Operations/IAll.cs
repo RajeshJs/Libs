@@ -2,8 +2,6 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Libs.Domain.Repositories.Operations
 {
@@ -14,12 +12,5 @@ namespace Libs.Domain.Repositories.Operations
         IQueryable<TEntity> All();
 
         IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors);
-    }
-
-    public interface IAllAsync<TEntity, in TPrimaryKey>
-        where TEntity : IEntity<TPrimaryKey>
-        where TPrimaryKey : IEquatable<TPrimaryKey>
-    {
-        Task<IQueryable<TEntity>> AllAsync(CancellationToken cancellationToken = default);
     }
 }

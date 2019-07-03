@@ -57,18 +57,6 @@ namespace Libs.EntityFrameworkCore.Repositories
 
         }
 
-        public override TPrimaryKey CreateAndGetId(TEntity entity)
-        {
-            entity = Create(entity);
-
-            if (entity.IsTransient())
-            {
-                Context.SaveChanges();
-            }
-
-            return entity.Id;
-        }
-
         public override TEntity Modify(TEntity entity)
         {
             AttachIfNot(entity);

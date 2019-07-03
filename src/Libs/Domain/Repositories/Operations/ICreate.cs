@@ -10,24 +10,17 @@ namespace Libs.Domain.Repositories.Operations
         where TEntity : IEntity<TPrimaryKey>
         where TPrimaryKey: IEquatable<TPrimaryKey>
     {
-        TPrimaryKey CreateAndGetId(TEntity entity);
-
         TEntity Create(TEntity entity);
 
-        List<TEntity> CreateMany(params TEntity[] entities);
-
-        List<TEntity> CreateMany(IEnumerable<TEntity> entities);
+        List<TEntity> Create(IEnumerable<TEntity> entities);
     }
 
     public interface ICreateAsync<TEntity, TPrimaryKey>
         where TEntity : IEntity<TPrimaryKey>
         where TPrimaryKey : IEquatable<TPrimaryKey>
     {
-
-        Task<TPrimaryKey> CreateAndGetIdAsync(TEntity entity);
-
         Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-        Task<List<TEntity>> CreateManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+        Task<List<TEntity>> CreateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     }
 }

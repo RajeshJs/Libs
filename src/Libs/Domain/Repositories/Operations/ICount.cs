@@ -11,12 +11,7 @@ namespace Libs.Domain.Repositories.Operations
         where TPrimaryKey : IEquatable<TPrimaryKey>
     {
         int Count(Expression<Func<TEntity, bool>> predicate = null);
-    }
 
-    public interface ILongCount<TEntity, in TPrimaryKey>
-        where TEntity : IEntity<TPrimaryKey>
-        where TPrimaryKey : IEquatable<TPrimaryKey>
-    {
         long LongCount(Expression<Func<TEntity, bool>> predicate = null);
     }
 
@@ -25,12 +20,7 @@ namespace Libs.Domain.Repositories.Operations
         where TPrimaryKey : IEquatable<TPrimaryKey>
     {
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null, CancellationToken cancellationToken = default);
-    }
 
-    public interface ILongCountAsync<TEntity, in TPrimaryKey>
-        where TEntity : IEntity<TPrimaryKey>
-        where TPrimaryKey : IEquatable<TPrimaryKey>
-    {
         Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate = null, CancellationToken cancellationToken = default);
     }
 }

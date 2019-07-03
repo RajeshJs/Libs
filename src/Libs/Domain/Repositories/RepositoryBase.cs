@@ -67,11 +67,6 @@ namespace Libs.Domain.Repositories
             return All().Where(predicate);
         }
 
-        public virtual Task<IQueryable<TEntity>> AllAsync(CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(All());
-        }
-
         public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(Count(predicate));
@@ -118,19 +113,9 @@ namespace Libs.Domain.Repositories
             return Task.FromResult(Where(predicate));
         }
 
-        public virtual TPrimaryKey CreateAndGetId(TEntity entity)
-        {
-            return Create(entity).Id;
-        }
-
         public abstract TEntity Create(TEntity entity);
 
-        public virtual List<TEntity> CreateMany(params TEntity[] entities)
-        {
-            return entities.Select(Create).ToList();
-        }
-
-        public virtual List<TEntity> CreateMany(IEnumerable<TEntity> entities)
+        public virtual List<TEntity> Create(IEnumerable<TEntity> entities)
         {
             return entities.Select(Create).ToList();
         }
@@ -173,19 +158,14 @@ namespace Libs.Domain.Repositories
 
         public abstract void Remove(Expression<Func<TEntity, bool>> predicate);
 
-        public virtual Task<TPrimaryKey> CreateAndGetIdAsync(TEntity entity)
-        {
-            return Task.FromResult(CreateAndGetId(entity));
-        }
-
         public virtual Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(Create(entity));
         }
 
-        public virtual Task<List<TEntity>> CreateManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        public virtual Task<List<TEntity>> CreateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(CreateMany(entities));
+            return Task.FromResult(Create(entities));
         }
 
         public virtual Task<TEntity> ModifyAsync(TEntity entity, CancellationToken cancellationToken = default)

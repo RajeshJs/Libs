@@ -7,20 +7,16 @@ namespace Libs.Domain.Repositories
     public interface IRepository<TEntity, TPrimaryKey> :
         IAll<TEntity, TPrimaryKey>,
         ICount<TEntity, TPrimaryKey>,
-        ILongCount<TEntity, TPrimaryKey>,
         IExists<TEntity, TPrimaryKey>,
         IFirst<TEntity, TPrimaryKey>,
         ISingle<TEntity, TPrimaryKey>,
         IWhere<TEntity, TPrimaryKey>,
         IPaging<TEntity, TPrimaryKey>,
 
-        IAllAsync<TEntity, TPrimaryKey>,
         ICountAsync<TEntity, TPrimaryKey>,
-        ILongCountAsync<TEntity, TPrimaryKey>,
         IExistsAsync<TEntity, TPrimaryKey>,
         IFirstAsync<TEntity, TPrimaryKey>,
         ISingleAsync<TEntity, TPrimaryKey>,
-        IWhereAsync<TEntity, TPrimaryKey>,
         IPagingAsync<TEntity, TPrimaryKey>,
 
         ICreate<TEntity, TPrimaryKey>,
