@@ -14,7 +14,7 @@ namespace Libs.Domain.Uow
             UnitOfWorks = new List<IUnitOfWork>();
         }
 
-        public virtual void Commit()
+        public virtual void Commit()  
         {
             foreach (var unitOfWork in UnitOfWorks)
                 unitOfWork.Commit();
