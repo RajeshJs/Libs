@@ -11,7 +11,11 @@ namespace Libs.Tests.Dependency
 
         public Bootstrapper_Tests()
         {
-            _bootstrapper = Bootstrapper.Instance;
+            _bootstrapper = Bootstrapper.Create(
+                options =>
+                {
+                    options.IocManager = IocManager.Instance;
+                });
 
             _bootstrapper.Initialize();
 

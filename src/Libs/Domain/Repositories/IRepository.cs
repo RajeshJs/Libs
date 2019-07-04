@@ -1,10 +1,18 @@
 ﻿using Libs.Domain.Entities;
 using Libs.Domain.Repositories.Operations;
 using System;
+using Libs.Dependency;
 
 namespace Libs.Domain.Repositories
 {
+    public interface IRepository : ITransientDependency
+    {
+
+    }
+
     public interface IRepository<TEntity, TPrimaryKey> :
+        IRepository,
+
         IAll<TEntity, TPrimaryKey>,
         ICount<TEntity, TPrimaryKey>,
         IExists<TEntity, TPrimaryKey>,

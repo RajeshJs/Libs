@@ -1,11 +1,11 @@
-﻿using Castle.Windsor.MsDependencyInjection;
+﻿using System;
+using Castle.Windsor.MsDependencyInjection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
 
-namespace Libs
+namespace Libs.AspNetCore
 {
     public static class ServiceCollectionExtensions
     {
