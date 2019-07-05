@@ -1,15 +1,29 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+using Libs.Dependency;
 
 namespace Libs.Domain.Uow
 {
-    public interface IUnitOfWorkManager : IDisposable
+    /// <summary>
+    /// 工作单元管理器
+    /// </summary>
+    public interface IUnitOfWorkManager : ITransientDependency
     {
-        void Commit();
+        /// <summary>
+        /// 当前活动的工作单元
+        /// </summary>
+        IActiveUnitOfWork Current { get; }
 
-        Task CommitAsync(CancellationToken cancellationToken = default);
+        /// <summary>
+        /// 启动新的工作单元
+        /// </summary>
+        /// <returns></returns>
+        IUnitOfWorkCompleteHandle Begin();
 
-        void Register(IUnitOfWork unitOfWork);
+        /// <summary>
+        /// 启动新的工作单元
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        IUnitOfWorkCompleteHandle Begin(UnitOfWorkOptions options);
     }
 }

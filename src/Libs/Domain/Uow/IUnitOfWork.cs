@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Libs.Domain.Uow
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IActiveUnitOfWork, IUnitOfWorkCompleteHandle
     {
-        int Commit();
+        string Id { get; }
 
-        Task<int> CommitAsync(CancellationToken cancellationToken = default);
+        IUnitOfWork Outer { get; }
+
+        void Begin(UnitOfWorkOptions options);
     }
 }

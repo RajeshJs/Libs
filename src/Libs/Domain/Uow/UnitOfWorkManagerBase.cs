@@ -1,44 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+using Libs.Dependency;
 
 namespace Libs.Domain.Uow
 {
     public abstract class UnitOfWorkManagerBase : IUnitOfWorkManager
     {
-        protected List<IUnitOfWork> UnitOfWorks;
+        private readonly IIocResolver _iocResolver;
+        private readonly ICurrentUnitOfWorkProvider _currentUnitOfWorkProvider;
 
-        protected UnitOfWorkManagerBase()
+        protected UnitOfWorkManagerBase(
+            IIocResolver iocResolver,
+            ICurrentUnitOfWorkProvider currentUnitOfWorkProvider
+            )
         {
-            UnitOfWorks = new List<IUnitOfWork>();
+            _iocResolver = iocResolver;
+            _currentUnitOfWorkProvider = currentUnitOfWorkProvider;
         }
 
-        public virtual void Commit()  
+        /// <inheritdoc />
+        public IActiveUnitOfWork Current => _currentUnitOfWorkProvider.Current;
+
+        /// <inheritdoc />
+        public IUnitOfWorkCompleteHandle Begin()
         {
-            foreach (var unitOfWork in UnitOfWorks)
-                unitOfWork.Commit();
+            return Begin(new UnitOfWorkOptions());
         }
 
-        public virtual async Task CommitAsync(CancellationToken cancellationToken = default)
+        /// <inheritdoc />
+        public IUnitOfWorkCompleteHandle Begin(UnitOfWorkOptions options)
         {
-            foreach (var unitOfWork in UnitOfWorks)
-                await unitOfWork.CommitAsync(cancellationToken);
-        }
+            var outerUow = _currentUnitOfWorkProvider.Current;
 
-        public virtual void Dispose()
-        {
-            foreach (var unitOfWork in UnitOfWorks)
-                unitOfWork?.Dispose();
-        }
 
-        public virtual void Register(IUnitOfWork unitOfWork)
-        {
-            if (unitOfWork == null)
-                throw new ArgumentNullException(nameof(unitOfWork));
-
-            if (!UnitOfWorks.Contains(unitOfWork))
-                UnitOfWorks.Add(unitOfWork);
         }
     }
 }
