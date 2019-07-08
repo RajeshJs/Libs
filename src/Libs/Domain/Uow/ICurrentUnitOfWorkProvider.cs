@@ -2,6 +2,6 @@
 {
     public interface ICurrentUnitOfWorkProvider
     {
-        IUnitOfWork Current { get; }
+        IUnitOfWork Current { get; set; }
     }
 }

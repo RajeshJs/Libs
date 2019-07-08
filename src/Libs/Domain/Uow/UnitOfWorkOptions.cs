@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Transactions;
 
 namespace Libs.Domain.Uow
@@ -8,7 +10,7 @@ namespace Libs.Domain.Uow
         /// <summary>
         /// 事务范围选项
         /// </summary>
-        public TransactionScopeOption? ScopeOption { get; set; }
+        public TransactionScopeOption? Scope { get; set; }
 
         /// <summary>
         /// 是否为事务
@@ -26,12 +28,52 @@ namespace Libs.Domain.Uow
         public IsolationLevel? IsolationLevel { get; set; }
 
         /// <summary>
+        /// 过滤器
+        /// </summary>
+        public List<DataFilterConfiguration> FilterOverrides { get; }
+
+        /// <summary>
         /// 构造，默认参数
         /// </summary>
         public UnitOfWorkOptions()
         {
-            IsTransactional = false;
-            Timeout = TimeSpan.FromMinutes(1);
+            FilterOverrides = new List<DataFilterConfiguration>();
+        }
+
+        internal void FillDefaultsForNonProvidedOptions(IUnitOfWorkDefaultOptions defaultOptions)
+        {
+            if (!IsTransactional.HasValue)
+            {
+                IsTransactional = defaultOptions.IsTransactional;
+            }
+
+            if (!Scope.HasValue)
+            {
+                Scope = defaultOptions.Scope;
+            }
+
+            if (!Timeout.HasValue && defaultOptions.Timeout.HasValue)
+            {
+                Timeout = defaultOptions.Timeout.Value;
+            }
+
+            if (!IsolationLevel.HasValue && defaultOptions.IsolationLevel.HasValue)
+            {
+                IsolationLevel = defaultOptions.IsolationLevel.Value;
+            }
+        }
+
+        internal void FillOuterUowFiltersForNonProvidedOptions(List<DataFilterConfiguration> filterOverrides)
+        {
+            foreach (var filterOverride in filterOverrides)
+            {
+                if (FilterOverrides.Any(fo => fo.FilterName == filterOverride.FilterName))
+                {
+                    continue;
+                }
+
+                FilterOverrides.Add(filterOverride);
+            }
         }
     }
 }
